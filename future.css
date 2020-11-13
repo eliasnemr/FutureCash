@@ -1,0 +1,184 @@
+body {
+  display: webkit box;
+  display: webkit flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+#menu {
+  background-color: #F0F0FA;
+}
+#menu .menuBtn {
+  background-color: #000 !important;
+  font-weight: 500;
+}
+#menu .menuBtn:hover {
+  background-color: #F65130 !important;
+}
+#menu #menuBtn-wrap {
+  background: transparent !important;
+}
+#menu #menuBtn-wrap .menuBtn.active {
+  background-color: #F65130 !important;
+}
+#menu #menuBtn-wrap .card-content {
+  padding: 0 !important;
+}
+#menu #menuBtn-wrap .card-content .collection {
+  border: none !important;
+}
+#menu #menuBtn-wrap .card-content .collection .collection-header {
+  background-color: none !important;
+  background: transparent !important;
+}
+#b-title-wrap {
+  margin-top: 5%;
+  margin-left: 8%;
+  margin-right: 8%;
+  background-color: #000 !important;
+}
+#b-title-wrap .card-title {
+  padding: 5%;
+}
+#b-title-wrap .card-title h4 {
+  color: #fff !important;
+  font-weight: 800;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#b-title-wrap .card-title h4 span {
+  color: #F65130 !important;
+  font-weight: 800;
+}
+#b-title-wrap .card-title h4 #demo {
+  color: #fff !important;
+  font-size: 1.0rem;
+  font-weight: 800;
+}
+#intro {
+  text-align: left;
+  padding: 0 5% 0 5%;
+}
+#intro h5 {
+  font-weight: 600;
+}
+#intro p {
+  font-weight: 300;
+}
+#intro #myaddress {
+  padding: 5%;
+  margin: 0.9%;
+  margin-bottom: 2%;
+  word-wrap: break-word;
+  white-space: normal;
+  background-color: #fff !important;
+  color: #548FFF !important;
+}
+#intro .genBtn {
+  background-color: #548FFF !important;
+}
+#intro #genBtn-wrap .col p {
+  font-weight: 400;
+  height: auto;
+}
+#intro #genBtn-wrap .col {
+  height: 40px;
+}
+#intro .card-action {
+  border-top: 2px solid black;
+}
+#intro #blocktime {
+  font-weight: 800 !important;
+}
+#intro #yourbalance {
+  font-weight: 800 !important;
+}
+.card-action {
+  border-top-color: #455969 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  padding-top: 5% !important;
+}
+.card-action .baldiv {
+  font-size: 1.2rem;
+  padding-left: 10%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-align: left !important;
+}
+.card-action .timediv {
+  font-size: 1.2rem;
+  padding-right: 10%;
+  font-weight: 600;
+  text-align: right !important;
+}
+#sendcash {
+  padding: 0 15% 0 15%;
+}
+#sendcash .collection {
+  background: inherit !important;
+  background-color: transparent !important;
+}
+#sendcash .collection .collection-item {
+  background: inherit !important;
+  border: none !important;
+}
+#sendcash .collection input { 
+  background-color: #fff !important;
+  word-break: break-all;
+  white-space: normal;
+}
+#sendcash .collection .collection-item div {
+  font-weight: 600;
+}
+#sendcash .sendBtn {
+  background-color: #317AFF !important;
+}
+
+#mycash {
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 5%;
+}
+#mycash #futuretable thead tr th {
+  border-left: 2px solid #fff;
+  border-right: 2px solid #fff;
+  padding: 1%;
+  text-align: center;
+  background-color: #91919D;
+  color: #fff !important;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+#mycash #futuretable tr .futurecash {
+  padding: 1%;
+  font-weight: 500;
+  background-color: #fff !important;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+#mycash .collect {
+  background-color: #317AFF !important;
+  color: #fff;
+}
+#mycash button {
+  width:100%;
+}
+#modalSendFunds h4 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+#modalSendFunds p {
+  font-size: 1.1rem;
+}
+#modalSendFunds #yesBtn {
+  color: #548FFF !important;
+  font-size:1.2rem;
+}
+#modalSendFunds a {
+  color: #F65130;
+}
