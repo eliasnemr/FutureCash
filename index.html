@@ -20,14 +20,23 @@
 	<script type="text/javascript">
 		// init date picker
 		document.addEventListener('DOMContentLoaded', function() {
+			// instantiate date-picker
 			var elems = document.querySelectorAll('.datepicker');
 			let options = {
 				minDate: new Date()
 			};
 			var instances = M.Datepicker.init(elems, options);
+			// instantiate time-picker
 			let options2 = {};
-			var elems = document.querySelectorAll('.timepicker');
-			var instances = M.Timepicker.init(elems, options2);
+			var elems2 = document.querySelectorAll('.timepicker');
+			var instances2 = M.Timepicker.init(elems2, options2);
+
+			// instantiate tooltips... 
+			let optionsTT = {};
+			var elems3 = document.querySelectorAll('.tooltipped');
+			var instances3 = M.Tooltip.init(elems3, optionsTT);
+
+			
 		  });
 		//Global Variables - used Script IDE..
 		var timescript  = "LET owner = PREVSTATE ( 0 ) LET time = PREVSTATE ( 1 ) RETURN SIGNEDBY ( owner ) AND @BLKNUM GTE time";
@@ -89,6 +98,25 @@
 
 			key    = document.getElementById("futurekey").value.trim();
 			
+			// add the date to time chosen by user... 
+			date+=" "+time;
+			// create it
+			let calculateDate = new Date(date);
+			// get the date in milliseconds
+			let ms = calculateDate.getTime();
+			// get today's date and time
+			let today = new Date();
+			// get it as ms
+			let msToday = today.getTime();
+			// get difference
+			let difference = ms - msToday;
+			// block time == 20000 milliseconds/20 seconds
+			let BLOCK_TIME = 20000;
+			// get the amount of blocks needed till time
+			let blockDifference = Math.round(difference/BLOCK_TIME);
+			// current block
+			let block = Minima.block + blockDifference;
+
 			if(amount == "" || time=="" || key =="" ){
 				var elems = document.querySelectorAll('.modal');
 				let options = {
@@ -123,6 +151,7 @@
 						//Clear it..
 						document.getElementById("amount").value = "";
 						document.getElementById("futuretime").value = "";
+						document.getElementById("futuredate").value = "";
 						document.getElementById("futurekey").value = "";
 						
 						//Create a random txn id..
@@ -132,7 +161,8 @@
 						var txncreator = 
 							"txncreate "+txnid+";"+
 							"txnstate "+txnid+" 0 "+key+";"+
-							"txnstate "+txnid+" 1 "+time+";"+
+							"txnstate "+txnid+" 1 "+block+";"+
+							"txnstate "+txnid+" 2 "+ms+";"+
 							"txnauto "+txnid+" "+amount+" "+timeaddress+";"+
 							"txnpost "+txnid+";"+
 							"txndelete "+txnid+";";
@@ -170,6 +200,9 @@
 					
 					var keycoin    = Minima.util.getStateVariable(coinproof.prevstate,0);
 					var timecoin   = parseInt(Minima.util.getStateVariable(coinproof.prevstate,1), 10);
+					var datecoin   = parseInt(Minima.util.getStateVariable(coinproof.prevstate, 2), 10);
+					var date = "";
+					date = new Date(datecoin);
 					var amountcoin = coinproof.coin.amount;
 					
 					var collectstring = "";
@@ -184,7 +217,7 @@
 						cashtable += 
 						"<tr><td class=futurecash>"+coinproof.coin.amount+"</td>"+
 							"<td class=futurecash>"+Minima.util.getStateVariable(coinproof.prevstate,1)+"</td>"+
-							"<td id='futurecashbtn' class=futurecash>"+collectstring+"</td>"+
+							"<td id='futurecashbtn' class='futurecash tooltipped' data-position='bottom' data-tooltip='"+date+"'>"+collectstring+"</td>"+
 						"</tr>";	
 					}
 				}

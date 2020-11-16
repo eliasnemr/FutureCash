@@ -1,15 +1,15 @@
 /** Default Minima font - Manrope master */
 @font-face {
   font-family: manrope-bold;
-  src: url("./fonts/manrope-bold.ttf");
+  src: url("./fonts/manrope-bold.otf");
 }
 @font-face {
   font-family: manrope-light;
-  src: url("./fonts/manrope-light.ttf");
+  src: url("./fonts/manrope-light.otf");
 }
 @font-face {
   font-family: manrope-regular;
-  src: url("./fonts/manrope-regular.ttf");
+  src: url("./fonts/manrope-regular.otf");
 }
 body {
   font-family: manrope-regular;
@@ -202,6 +202,7 @@ body {
   border: none !important;
 }
 #sendcash input { 
+  padding-left: 2%;
   background-color: #fff !important;
   word-break: break-all;
   white-space: normal;
