@@ -17,7 +17,6 @@
 
 <body>
 
-	
 	<script type="text/javascript">
 		// init date picker
 		document.addEventListener('DOMContentLoaded', function() {
@@ -36,7 +35,7 @@
  			
 		function setTime(){
 			//Set the right time
-			document.getElementById("blocktime").innerHTML = "Blocktime: "+Minima.block;	
+			document.getElementById("blocktime").innerHTML = "Block time: "+Minima.block;	
 		}
 		
 		function setBalance(){
@@ -154,14 +153,14 @@
 			Minima.cmd("coins relevant address:"+timeaddress , function(json){
 
 				let cashtable =
-							'<table id="futuretable" class="highlight">'+
+							'<table id="futuretable" class="centered">'+
 								'<thead>'+
 									'<tr>'+
-										'<th>AMOUNT</th>'+
-										'<th>TIME</th>'+
-										'<th>COLLECT</th>'+
+										'<th>Amount</th>'+
+										'<th>Time</th>'+
+										'<th>Collect</th>'+
 									'</tr>'+
-								'</thead'+
+								'</thead>'+
 								'<tbody>';
 				
 				//get any of these coins that have the time address
@@ -175,7 +174,7 @@
 					
 					var collectstring = "";
 					if(timecoin <= Minima.block){
-						collectstring="<button id=\""+coinproof.coin.coinid+"\" onclick='collectCoin(\""+coinproof.coin.coinid+"\",\""+keycoin+"\",\""+amountcoin+"\");' class='collect btn-flat waves-effect waves-light'>COLLECT</button>";
+						collectstring="<button data-target='modalSendFunds' id=\""+coinproof.coin.coinid+"\" onclick='collectCoin(\""+coinproof.coin.coinid+"\",\""+keycoin+"\",\""+amountcoin+"\");' class='collect btn-flat waves-effect waves-light modal-trigger' style='font-family:manrope-bold !important'>COLLECT</button>";
 					}else{
 						var diff = timecoin - Minima.block;
 						collectstring = "Ready in "+diff+"..";
@@ -279,63 +278,80 @@
 	</script>
 	
 	<div id="menu" class="container center-align">
-		<div id="b-title-wrap" class="z-depth-1 card">
-			<div class="card-title">
+		<div id="b-title-wrap" class="z-depth-0 card">
+			<div class="card-title z-depth-0">
 				<h4>
 					Future<span>Cash ></span>
 					<span id="demo">Demo</span>
+
+					<span id="icon"><img src="assets/MINIMA_ORANGE.svg"></span>
 				</h4>
 			</div>
 		</div>
 
-		<div id="menuBtn-wrap" class="z-depth-0 card">
+		<div id="menu-content" class="z-depth-0 card">
+			<div class="card-title z-depth-0">
+				<div onclick="showPage(0)" id="introBtn" class="btn-flat menuBtn active">Intro</div>
+				<div onclick="showPage(1)" id="sendCashBtn" class="btn-flat menuBtn">Send Cash</div>
+				<div onclick="showPage(2)" id="myFutureBtn" class="btn-flat menuBtn">My Future</div>
+			</div>
 			<div class="card-content">
-				<ul class="collection with-header">
-					<li class="collection-header">
-						<div onclick="showPage(0)" id="introBtn" class="btn menuBtn active">Intro</div>
-						<div onclick="showPage(1)" id="sendCashBtn" class="btn menuBtn">Send Cash</div>
-						<div onclick="showPage(2)" id="myFutureBtn" class="btn menuBtn">My Future</div>
-					</li>
-				</ul>
 				<!-- Intro -->
 				<div id="intro">
-					<h5>Send cash to the future!</h5>
-					<p>Ask whoever you are sending cash to, to use this MiniDAPP to generate their key Or better still - send YOURSELF some cash.. do your future self a favour! The <b>best</b> way to safe-guard your money is not to spend it.. NOW.</p>
+					<h5>Safeguard your money with FutureCash.</h5>
+					<p style="padding-right: 3.5%;">Look after your money by not spending it <span style="font-family: manrope-bold;">NOW!</span>  So do your future-self a favour - generate a key and send yourself some FutureCash.<br> You can look after money for others, too!  Get them to send you their generated FutureCash key, then use that key to safeguard their future.</p>
 
-					<p id="myaddress">no key generated yet!</p>
+					<div id="myaddress-wrap">
+						<p id="myaddress">no key generated yet!</p>
+					</div>
 
 					<div id="genBtn-wrap" class="row">
-						<div class="col s6">
-							<div onclick="newKey();" class="btn genBtn">Generate your key </div>
+						<div style="padding: 0;" class="col s6 m7 l6">
+							<div onclick="newKey();" class="btn-flat genBtn">Generate key</div>
 						</div>
-						<div class="valign-wrapper col s6">
-							<p><b>Only use the key once!</b></p>
+						<div class="valign-wrapper col s12 m5 pull-m4 l6 pull-l3">
+							<p><span style="font-family: manrope-bold;">Only use the key once!</span></p>
 						</div>
 					</div>
-					
 				</div>
 				<!-- Send Cash -->
 				<div id="sendcash" class="hide">
-					<ul class="collection">
-						<div class="input-field col s3">
+					<div class="row">
+
+					</div>
+					<div class="row">
+						<div class="col s3">
+							<h6 style="margin-top: 0">Future Date & Time:</h6>
+						</div>
+						<div class="col s4">
 							<input size="40" class="datepicker" id="futuredate">
 						</div>
-						<div class="input-field col s3">
-							<input size="40" class="timepicker" id="futuretime">
+						<div class="col s5">
+							<input size="40" type="text" class="timepicker" id="futuretime">
 						</div>
-						<div class="input-field">
+					</div>
+					<div class="row">
+						<div class="col s3">
+							<h6>Amount:</h6>
+						</div>
+						<div class="col s9">
 							<input size="40" type="number" id="amount">
-							<label for="amount">Amount</label>
 						</div>
-						<div class="input-field">
+					</div>
+					<div class="row">
+						<div class="col s3">
+							<h6>Key:</h6>
+						</div>
+						<div class="col s9">
 							<input size="40" type="text" id="futurekey">
-							<label for="futurekey">Key</label>
 						</div>
-						<li class="collection-item input-field">
-							<div onclick="sendFunds()" data-target="modalSendFunds" class="btn sendBtn modal-trigger">Send Funds</div>
-						</li>
-					</ul>
-
+					</div>
+					<div class="row">
+						<div class="col s3"></div>
+						<div class="col s9">
+							<div onclick="sendFunds()" data-target="modalSendFunds" class="btn-flat sendBtn modal-trigger left">Send Funds</div>
+						</div>
+					</div>
 				</div>
 				<!-- My Future -->
 				<div id="mycash" class="hide">
@@ -346,10 +362,10 @@
 
 				<div class="card-action">
 					<div class="row">
-						<div class="col s6">
+						<div style="padding: 0;" class="col s6">
 							<div class="baldiv" id="yourbalance">...</div>
 						</div>
-						<div class="col s6">
+						<div style="padding: 0;" class="col s6">
 							<div class="timediv" id="blocktime">...</div>
 						</div>
 					</div>

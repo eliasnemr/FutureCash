@@ -1,4 +1,18 @@
+/** Default Minima font - Manrope master */
+@font-face {
+  font-family: manrope-bold;
+  src: url("./fonts/manrope-bold.ttf");
+}
+@font-face {
+  font-family: manrope-light;
+  src: url("./fonts/manrope-light.ttf");
+}
+@font-face {
+  font-family: manrope-regular;
+  src: url("./fonts/manrope-regular.ttf");
+}
 body {
+  font-family: manrope-regular;
   display: webkit box;
   display: webkit flex;
   display: -ms-flexbox;
@@ -10,41 +24,67 @@ body {
 }
 #menu {
   background-color: #F0F0FA;
+  width: 700px;
+}
+#menu #menu-content .card-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+#menu #menu-content .card-title div {
+  width: 32.5% !important;
+}
+#menu #menu-content .card-title h4 {
+  font-family: manrope-bold !important;
 }
 #menu .menuBtn {
-  background-color: #000 !important;
+  font-family: manrope-bold !important;
+  font-size: 1.2rem !important;
+  text-transform: none !important;
+  background-color: #031B32 !important;
+  color: #fff !important;
   font-weight: 500;
 }
 #menu .menuBtn:hover {
   background-color: #F65130 !important;
 }
-#menu #menuBtn-wrap {
+#menu #menu-content {
   background: transparent !important;
 }
-#menu #menuBtn-wrap .menuBtn.active {
+#menu #menu-content .card-action .row .col {
+  margin-bottom: 3%;
+}
+#menu #menu-content .menuBtn.active {
   background-color: #F65130 !important;
 }
-#menu #menuBtn-wrap .card-content {
+#menu #menu-content .card-content {
   padding: 0 !important;
-}
-#menu #menuBtn-wrap .card-content .collection {
-  border: none !important;
-}
-#menu #menuBtn-wrap .card-content .collection .collection-header {
-  background-color: none !important;
-  background: transparent !important;
 }
 #b-title-wrap {
   margin-top: 5%;
-  margin-left: 8%;
-  margin-right: 8%;
-  background-color: #000 !important;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 0;
+  background-color: #031B32 !important;
 }
 #b-title-wrap .card-title {
-  padding: 5%;
+  font-family: manrope-bold !important;
+  padding-top: 3%;
+  padding-left: 5%;
+  padding-bottom: 1.5%;
+}
+#b-title-wrap .card-title #icon img {
+  width: 65px;
+  height: auto;
+  padding-top: 0.3%;
+  float: right;
+  padding-right: 5%;
 }
 #b-title-wrap .card-title h4 {
   color: #fff !important;
+  text-align: left;
   font-weight: 800;
   margin: 0 !important;
   padding: 0 !important;
@@ -55,22 +95,30 @@ body {
 }
 #b-title-wrap .card-title h4 #demo {
   color: #fff !important;
-  font-size: 1.0rem;
+  font-size: 1.2rem;
   font-weight: 800;
+  padding-left: 1%;
 }
 #intro {
   text-align: left;
   padding: 0 5% 0 5%;
 }
 #intro h5 {
-  font-weight: 600;
+  font-family: manrope-bold !important;
+  font-size: 1.3rem;
 }
 #intro p {
+  font-size: 1.3rem;
   font-weight: 300;
+  text-align: left;
+}
+#intro #myaddress-wrap {
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 #intro #myaddress {
-  padding: 5%;
-  margin: 0.9%;
+  font-size: 1.2rem;
+  padding: 2.5%;
   margin-bottom: 2%;
   word-wrap: break-word;
   white-space: normal;
@@ -78,7 +126,17 @@ body {
   color: #548FFF !important;
 }
 #intro .genBtn {
+  font-family: manrope-bold !important;
+  font-size: 1.2rem !important;
+  text-transform: none !important;
+  color: #fff !important;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  word-break: keep-all;
   background-color: #548FFF !important;
+}
+#intro #genBtn-wrap .col {
+  padding: 0;
 }
 #intro #genBtn-wrap .col p {
   font-weight: 400;
@@ -100,23 +158,40 @@ body {
   border-top-color: #455969 !important;
   margin: 0 !important;
   padding: 0 !important;
-  padding-top: 5% !important;
+  height: 30px;
+}
+.card-action #yourbalance, .card-action #blocktime {
+  padding-top: 5%;
+  font-size: 1.0rem;
+  letter-spacing: 0.02em;
 }
 .card-action .baldiv {
-  font-size: 1.2rem;
+  font-family: manrope-bold !important;
+  font-size: 1.2rem !important;
   padding-left: 10%;
   font-weight: 600;
   letter-spacing: -0.02em;
   text-align: left !important;
+  font-variant-numeric: oldstyle-nums;
 }
 .card-action .timediv {
-  font-size: 1.2rem;
+  font-family: manrope-bold !important;
+  font-size: 1.2rem !important;
   padding-right: 10%;
   font-weight: 600;
   text-align: right !important;
+  font-variant-numeric: oldstyle-nums;
 }
 #sendcash {
-  padding: 0 15% 0 15%;
+  padding: 0 3% 0 15%;
+}
+#sendcash .col {
+  padding-left: 0 !important;
+}
+#sendcash h6 {
+  font-family: manrope-bold;
+  font-size: 1.2rem !important;
+  position: relative !important;
 }
 #sendcash .collection {
   background: inherit !important;
@@ -126,39 +201,48 @@ body {
   background: inherit !important;
   border: none !important;
 }
-#sendcash .collection input { 
+#sendcash input { 
   background-color: #fff !important;
   word-break: break-all;
   white-space: normal;
+  border: none !important;
 }
 #sendcash .collection .collection-item div {
   font-weight: 600;
 }
 #sendcash .sendBtn {
   background-color: #317AFF !important;
+  color: #fff !important;
+  text-transform: none;
 }
 
 #mycash {
-  padding-left: 2%;
-  padding-right: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
   padding-bottom: 5%;
 }
+#mycash #futuretable {
+  margin-top: 1.8%;
+}
 #mycash #futuretable thead tr th {
-  border-left: 2px solid #fff;
-  border-right: 2px solid #fff;
-  padding: 1%;
+  padding: 0.5%;
+  font-size: 1.2rem;
   text-align: center;
+  text-transform: none !important;
+  font-family: manrope-bold !important;
+
+  width: 120px;
+  border-left: 1px solid #fff;
   background-color: #91919D;
   color: #fff !important;
-  font-weight: 800;
-  letter-spacing: -0.01em;
 }
-#mycash #futuretable tr .futurecash {
-  padding: 1%;
+#mycash #futuretable tbody tr td {
   font-weight: 500;
   background-color: #fff !important;
   letter-spacing: 0.02em;
   text-align: center;
+  padding: 0.5% !important;
+  font-variant-numeric: tabular-nums;
 }
 #mycash .collect {
   background-color: #317AFF !important;
@@ -181,4 +265,22 @@ body {
 }
 #modalSendFunds a {
   color: #F65130;
+}
+
+
+
+
+
+
+/** Date picker/time picker */
+
+.datepicker-date-display {
+  background-color: rgb(49,122,255) !important;
+}
+.datepicker-canvas-bg {
+  fill: rgb(49,122,255) !important;
+}
+
+.timepicker-digital-display {
+  background-color: rgb(49,122,255) !important;
 }
