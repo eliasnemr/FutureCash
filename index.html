@@ -40,9 +40,8 @@
 		var timescript  = "LET owner = PREVSTATE ( 0 ) LET time = PREVSTATE ( 1 ) RETURN SIGNEDBY ( owner ) AND @BLKNUM GTE time";
 		 var timeaddress = "";
 		 
-		function showDate(date) {
-			if(date.length)
-			M.toast({html: date});
+		function showBlock(block) {
+			M.toast({html: "Ready at block - "+block, classes:"ready"});
 		}
 		 
 		function setTime(){
@@ -192,9 +191,9 @@
 							'<table id="futuretable" class="centered">'+
 								'<thead>'+
 									'<tr>'+
-										'<th>Amount</th>'+
-										'<th>Time</th>'+
-										'<th>Collect</th>'+
+										'<th id="th-amnt">Amount</th>'+
+										'<th id="th-time">Time</th>'+
+										'<th id="th-collect">Collect</th>'+
 									'</tr>'+
 								'</thead>'+
 								'<tbody>';
@@ -217,30 +216,41 @@
 					}else{
 						var diff = timecoin - Minima.block;
 						collectstring = "Ready in "+diff+"..";
+
+						// calculate progress
+						let percent = (Minima.block/diff * 100);
+						
+						collectstring = '<div class="progress">'+
+											'<div class="determinate" style="width: '+percent+'">'+
+										'</div>';
 					}
 
 					// format date
 					const dateTimeFormat = new Intl.DateTimeFormat('en', {
-						year: 'numeric',
-						month: 'long',
+						year: '2-digit',
+						month: 'short',
 						day: 'numeric',
 						hour: 'numeric',
 						minute: 'numeric',
 						second: 'numeric'
 					  });
 					date = dateTimeFormat.format(date);
-					date = JSON.stringify(date);
+					
 					if(coinproof.coin.address == timeaddress){
-						cashtable += 
-						"<tr><td class=futurecash>"+coinproof.coin.amount+"</td>"+
-							"<td class=futurecash>"+Minima.util.getStateVariable(coinproof.prevstate,1)+"</td>"+
-							"<td onclick='showDate("+date+")' id='futurecashbtn' class='futurecash'>"+collectstring+"</td>"+
-						"</tr>";	
+						cashtable +=
+									'<tr>'+
+										'<td class="futurecash"><div class="wrap">'+coinproof.coin.amount+'</div></td>'+
+										'<td class="futurecash"><div class="wrap">'+date+'</div></td>'+
+										'<td class="futurecash" id="futurecashbtn" onclick="showBlock('+timecoin+')"><div class="wrap">'+collectstring+'</div></td>'+
+									'</tr>';
 					}
 				}
 				
 				if(coinlen == 0){
-					cashtable += "<tr> <td colspan=3 style='text-align:center;'> <br>No money yet! </td> </tr>";
+					cashtable += 
+								'<tr>'+
+									'<td colspan="3" style="text-align: center;"> <br>No money yet! </td>'+
+								'</tr>';
 				}
 				
 				cashtable += "</tbody></table>";
@@ -320,7 +330,11 @@
 		 			
 		 		}else if(msg.event == "newbalance"){
 		 			setBalance();
-		 		}
+		 		}else if(msg.event == "miningstart") {
+					M.toast({html: "Mining started...", classes:"miningstarted"});
+				}else if(msg.event == "miningstop") {
+					M.toast({html: "Mining stopped...", classes:"miningstop"});
+				}
 			});
 			
 			//Show Intro
@@ -348,7 +362,7 @@
 				<!-- Intro -->
 				<div id="intro">
 					<h5>Safeguard your money with FutureCash.</h5>
-					<p style="padding-right: 3.5%;">Look after your money by not spending it <span style="font-family: manrope-bold;">NOW!</span>  So do your future-self a favour - generate a key and send yourself some FutureCash.<br> You can look after money for others, too!  Get them to send you their generated FutureCash key, then use that key to safeguard their future.</p>
+					<p style="padding-right: 3.5%;">Look after your money by not spending it <span style="font-family: manrope-bold;">NOW!</span><br>  So do your future-self a favour - generate a key and send yourself some FutureCash.<br> You can look after money for others, too!  Get them to send you their generated FutureCash key, then use that key to safeguard their future.</p>
 
 					<div id="myaddress-wrap">
 						<p id="myaddress">no key generated yet!</p>
@@ -370,7 +384,7 @@
 					</div>
 					<div class="row">
 						<div class="col s3">
-							<h6 style="margin-top: 0">Future Date & Time:</h6>
+							<h6 style="margin-top: 0">Date & Time:</h6>
 						</div>
 						<div class="col s4">
 							<input size="40" class="datepicker" id="futuredate">

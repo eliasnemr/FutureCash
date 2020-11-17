@@ -72,7 +72,7 @@ var Minima = {
 	debug : true,
 	
 	//Show mining messages - can be dealt with by the MiniDAPP
-	showmining : true,
+	showmining : false,
 	
 	/**
 	 * Minima Startup - with the callback function used for all Minima messages

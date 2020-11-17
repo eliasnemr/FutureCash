@@ -240,6 +240,7 @@ body {
 #sendcash input { 
   padding-left: 2%;
   background-color: #fff !important;
+  height: 36px;
   word-break: break-all;
   white-space: normal;
   border: none !important;
@@ -262,6 +263,7 @@ body {
 }
 #mycash #futuretable {
   margin-top: 1.8%;
+  width: 100%;
   position: relative;
 }
 #mycash #futuretable thead tr th {
@@ -273,23 +275,33 @@ body {
 
   position: sticky;
   width: 120px;
-  border-left: 1px solid #fff;
+  border-left: 4.5px solid #F0F0FA;
   background-color: #91919D;
   color: #fff !important;
+}
+#mycash #futuretable thead tr #th-amnt {
+  border-left: none !important;
 }
 .collect {
   font-family: manrope-bold !important;
   max-height: auto;
 }
-#mycash #futuretable tbody tr td {
+#mycash #futuretable tbody tr td .wrap {
+  text-align: right; 
+  display: inline-block;
+  min-width: 75px;
+}
+#mycash #futuretable tbody tr .futurecash {
+  text-align: center;
+
+  max-width: 45px;
   max-height: 50px;
   background-color: #fff !important;
-  text-align: center;
-  padding: 0.5% !important;
+  padding: 1% !important;
   font-family: manrope-bold !important;
   font-variant-numeric: tabular-nums;
-  max-width: 30px;
 }
+
 #futurecashbtn {
   cursor: pointer;
 }
@@ -322,6 +334,20 @@ body {
 /** Toast */
 .success {
   background-color: #548FFF !important;
+}
+.ready {
+  background-color: #548FFF !important;
+  font-family: manrope-bold;
+}
+.miningstarted {
+  background-color: #548FFF !important;
+  font-family: manrope-bold;
+  height: 150px;
+}
+.miningstop {
+  background-color: rgb(246,81,48) !important;
+  font-family: manrope-bold;
+  height: 150px;
 }
 /** Date picker/time picker */
 
