@@ -11,7 +11,44 @@
   font-family: manrope-regular;
   src: url("./fonts/manrope-regular.otf");
 }
+@media only screen and (max-width: 365px) {
+  #icon {
+    display: none;
+  }
+}
+@media only screen and (max-width: 780px) {
+  #icon {
+    width: 7.5vh !important;
+  }
+}
+@media only screen and (max-width: 470px) {
+  #icon {
+    width: 6vh !important;
+  }
+  #menu {
+    width: 100%;
+    height: auto;
+  }
+  #menu-content .card-content {
+    height: 78%;
+  }
+  #menu-content .card-action {
+    display: block;
+    height: 10%;
+  }
+  #menu-content .card-title .menuBtn {
+    font-size: 1.0rem !important;
+  }
+
+}
+@media only screen and (max-width: 380px) {
+  #menu-content .card-title .menuBtn {
+    font-size: 0.8rem !important;
+  }
+}
+
 body {
+  background-color: #031B32;
   font-family: manrope-regular;
   display: webkit box;
   display: webkit flex;
@@ -24,7 +61,7 @@ body {
 }
 #menu {
   background-color: #F0F0FA;
-  width: 700px;
+  max-width: 700px;
 }
 #menu #menu-content .card-title {
   display: flex;
@@ -33,13 +70,13 @@ body {
   padding-left: 5%;
   padding-right: 5%;
 }
-#menu #menu-content .card-title div {
+#menu #menu-content .card-title .menuBtn {
   width: 32.5% !important;
 }
 #menu #menu-content .card-title h4 {
   font-family: manrope-bold !important;
 }
-#menu .menuBtn {
+#menu .menuBtn, #menu .menuBtn2 {
   font-family: manrope-bold !important;
   font-size: 1.2rem !important;
   text-transform: none !important;
@@ -47,7 +84,7 @@ body {
   color: #fff !important;
   font-weight: 500;
 }
-#menu .menuBtn:hover {
+#menu .menuBtn:hover, #menu .menuBtn2:hover {
   background-color: #F65130 !important;
 }
 #menu #menu-content {
@@ -75,10 +112,9 @@ body {
   padding-left: 5%;
   padding-bottom: 1.5%;
 }
-#b-title-wrap .card-title #icon img {
-  width: 65px;
+#b-title-wrap .card-title #icon {
+  width: 8.5vh;
   height: auto;
-  padding-top: 0.3%;
   float: right;
   padding-right: 5%;
 }
@@ -215,6 +251,8 @@ body {
   background-color: #317AFF !important;
   color: #fff !important;
   text-transform: none;
+  font-size: 1.2rem;
+  font-family: manrope-bold !important;
 }
 
 #mycash {
@@ -224,6 +262,7 @@ body {
 }
 #mycash #futuretable {
   margin-top: 1.8%;
+  position: relative;
 }
 #mycash #futuretable thead tr th {
   padding: 0.5%;
@@ -232,18 +271,27 @@ body {
   text-transform: none !important;
   font-family: manrope-bold !important;
 
+  position: sticky;
   width: 120px;
   border-left: 1px solid #fff;
   background-color: #91919D;
   color: #fff !important;
 }
+.collect {
+  font-family: manrope-bold !important;
+  max-height: auto;
+}
 #mycash #futuretable tbody tr td {
-  font-weight: 500;
+  max-height: 50px;
   background-color: #fff !important;
-  letter-spacing: 0.02em;
   text-align: center;
   padding: 0.5% !important;
+  font-family: manrope-bold !important;
   font-variant-numeric: tabular-nums;
+  max-width: 30px;
+}
+#futurecashbtn {
+  cursor: pointer;
 }
 #mycash .collect {
   background-color: #317AFF !important;
@@ -271,17 +319,19 @@ body {
 
 
 
-
-
+/** Toast */
+.success {
+  background-color: #548FFF !important;
+}
 /** Date picker/time picker */
 
 .datepicker-date-display {
-  background-color: rgb(49,122,255) !important;
+  background-color: #031B32 !important;
 }
 .datepicker-canvas-bg {
-  fill: rgb(49,122,255) !important;
+  fill: #031B32 !important;
 }
 
 .timepicker-digital-display {
-  background-color: rgb(49,122,255) !important;
+  background-color: #031B32 !important;
 }

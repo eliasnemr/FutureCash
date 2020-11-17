@@ -4,11 +4,13 @@
 	<!-- Graphics & design by Pete Howell -->
 	<!-- 13/11/2020 -->
 <head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 	<!--   The MINIMA MiFi Javascript Library -->
 	<script type="text/javascript" src="minima.js"></script>
 	<script type="text/javascript" src="decimal.js"></script>
 	<!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/materialize.css">
 	<!--  STYLE -->
 	<link rel="stylesheet" type="text/css" href="future.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -18,6 +20,7 @@
 <body>
 
 	<script type="text/javascript">
+
 		// init date picker
 		document.addEventListener('DOMContentLoaded', function() {
 			// instantiate date-picker
@@ -30,18 +33,18 @@
 			let options2 = {};
 			var elems2 = document.querySelectorAll('.timepicker');
 			var instances2 = M.Timepicker.init(elems2, options2);
-
-			// instantiate tooltips... 
-			let optionsTT = {};
-			var elems3 = document.querySelectorAll('.tooltipped');
-			var instances3 = M.Tooltip.init(elems3, optionsTT);
-
 			
 		  });
+
 		//Global Variables - used Script IDE..
 		var timescript  = "LET owner = PREVSTATE ( 0 ) LET time = PREVSTATE ( 1 ) RETURN SIGNEDBY ( owner ) AND @BLKNUM GTE time";
- 		var timeaddress = "";
- 			
+		 var timeaddress = "";
+		 
+		function showDate(date) {
+			if(date.length)
+			M.toast({html: date});
+		}
+		 
 		function setTime(){
 			//Set the right time
 			document.getElementById("blocktime").innerHTML = "Block time: "+Minima.block;	
@@ -98,7 +101,10 @@
 
 			key    = document.getElementById("futurekey").value.trim();
 			
-			// add the date to time chosen by user... 
+			// add the date to time chosen by user...
+			if(date=="") {
+				return M.toast({html: "Empty input fields are not allowed!"});
+			}
 			date+=" "+time;
 			// create it
 			let calculateDate = new Date(date);
@@ -117,7 +123,7 @@
 			// current block
 			let block = Minima.block + blockDifference;
 
-			if(amount == "" || time=="" || key =="" ){
+			if(amount == "" || time=="" || key =="" || date=="" ){
 				var elems = document.querySelectorAll('.modal');
 				let options = {
 					opacity: 0.7,
@@ -207,17 +213,28 @@
 					
 					var collectstring = "";
 					if(timecoin <= Minima.block){
-						collectstring="<button data-target='modalSendFunds' id=\""+coinproof.coin.coinid+"\" onclick='collectCoin(\""+coinproof.coin.coinid+"\",\""+keycoin+"\",\""+amountcoin+"\");' class='collect btn-flat waves-effect waves-light modal-trigger' style='font-family:manrope-bold !important'>COLLECT</button>";
+						collectstring="<button data-target='modalSendFunds' id=\""+coinproof.coin.coinid+"\" onclick='collectCoin(\""+coinproof.coin.coinid+"\",\""+keycoin+"\",\""+amountcoin+"\");' class='collect btn-flat btn-small waves-effect waves-light modal-trigger'>COLLECT</button>";
 					}else{
 						var diff = timecoin - Minima.block;
 						collectstring = "Ready in "+diff+"..";
 					}
-					
+
+					// format date
+					const dateTimeFormat = new Intl.DateTimeFormat('en', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric',
+						hour: 'numeric',
+						minute: 'numeric',
+						second: 'numeric'
+					  });
+					date = dateTimeFormat.format(date);
+					date = JSON.stringify(date);
 					if(coinproof.coin.address == timeaddress){
 						cashtable += 
 						"<tr><td class=futurecash>"+coinproof.coin.amount+"</td>"+
 							"<td class=futurecash>"+Minima.util.getStateVariable(coinproof.prevstate,1)+"</td>"+
-							"<td id='futurecashbtn' class='futurecash tooltipped' data-position='bottom' data-tooltip='"+date+"'>"+collectstring+"</td>"+
+							"<td onclick='showDate("+date+")' id='futurecashbtn' class='futurecash'>"+collectstring+"</td>"+
 						"</tr>";	
 					}
 				}
@@ -257,6 +274,8 @@
 				//Post it..
 				Minima.cmd( txncreator , function(resp){
 					if(Minima.util.checkAllResponses(resp)){
+
+						M.toast({html: "Collected "+cashamount+" FutureCash!", classes:"success"});
 						
 						var elems = document.querySelectorAll('.modal');
 						let options = {
@@ -313,11 +332,8 @@
 	<div id="menu" class="container center-align">
 		<div id="b-title-wrap" class="z-depth-0 card">
 			<div class="card-title z-depth-0">
-				<h4>
-					Future<span>Cash ></span>
-					<span id="demo">Demo</span>
-
-					<span id="icon"><img src="assets/MINIMA_ORANGE.svg"></span>
+				<h4> Future<span>Cash ></span> <span id="demo">Demo</span>
+					<img id="icon" src="assets/MINIMA_ORANGE.svg">
 				</h4>
 			</div>
 		</div>
@@ -342,7 +358,7 @@
 						<div style="padding: 0;" class="col s6 m7 l6">
 							<div onclick="newKey();" class="btn-flat genBtn">Generate key</div>
 						</div>
-						<div class="valign-wrapper col s12 m5 pull-m4 l6 pull-l3">
+						<div class="valign-wrapper col s12 m5 pull-m3 l6 pull-l3">
 							<p><span style="font-family: manrope-bold;">Only use the key once!</span></p>
 						</div>
 					</div>
@@ -392,18 +408,16 @@
 						NO MONEY YET
 					</div>
 				</div>
-
-				<div class="card-action">
-					<div class="row">
-						<div style="padding: 0;" class="col s6">
-							<div class="baldiv" id="yourbalance">...</div>
-						</div>
-						<div style="padding: 0;" class="col s6">
-							<div class="timediv" id="blocktime">...</div>
-						</div>
+			</div>
+			<div class="card-action">
+				<div class="row">
+					<div style="padding: 0;" class="col s6">
+						<div class="baldiv" id="yourbalance">...</div>
+					</div>
+					<div style="padding: 0;" class="col s6">
+						<div class="timediv" id="blocktime">...</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 
@@ -423,7 +437,7 @@
 	</div>
 
 	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="js/materialize.js"></script>
 </body>
     
 </html>
