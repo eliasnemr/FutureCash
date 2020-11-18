@@ -11,9 +11,40 @@
   font-family: manrope-regular;
   src: url("./fonts/manrope-regular.otf");
 }
+
+#menu {
+  background-color: #F0F0FA;
+  max-width: 700px;
+  height: 650px;
+}
+#menu #menu-header {
+  position: fixed;
+  top: 0;
+}
+#menu #menu-content {
+  width: 100%;
+  height: 415px;
+  overflow-y: scroll;
+}
+#menu #menu-footer {
+  bottom: 0;
+  position: fixed;
+}
+
 @media only screen and (max-width: 365px) {
   #icon {
     display: none;
+  }
+}
+@media only screen and (max-width: 650px) {
+  #menu .menu-header #icon {
+    width: 6.5vh !important;
+  }
+  
+}
+@media only screen and (max-width: 406px) {
+  #menu .menu-header .menuBtn {
+    font-size: 0.8rem !important; 
   }
 }
 @media only screen and (max-width: 780px) {
@@ -27,26 +58,36 @@
   }
   #menu {
     width: 100%;
-    height: auto;
+    height: 100% !important;
   }
-  #menu-content .card-content {
-    height: 78%;
+  #menu #menu-content {
+    height: 700px;
   }
-  #menu-content .card-action {
-    display: block;
-    height: 10%;
+  #menu-content .menu-header .menuBtn {
+    font-size: 1.0rem !important;
   }
-  #menu-content .card-title .menuBtn {
+  #mycash #futuretable thead tr th {
     font-size: 1.0rem !important;
   }
 
 }
 @media only screen and (max-width: 380px) {
-  #menu-content .card-title .menuBtn {
+  #menu-content .menu-header .menuBtn {
     font-size: 0.8rem !important;
   }
+  #mycash #futuretable thead tr th {
+    font-size: 0.8rem !important;
+  }
+  #menu .menu-header #icon {
+    width: 5vh !important;
+    padding-top: 2%;
+    padding-left: 1%;
+  }
 }
-
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
 body {
   background-color: #031B32;
   font-family: manrope-regular;
@@ -59,21 +100,19 @@ body {
   -ms-flex-align: center;
   align-items: center;
 }
-#menu {
-  background-color: #F0F0FA;
-  max-width: 700px;
-}
-#menu #menu-content .card-title {
+
+#menu #buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding-left: 5%;
   padding-right: 5%;
 }
-#menu #menu-content .card-title .menuBtn {
+#menu #buttons .menuBtn {
+  margin-top: 5px;
   width: 32.5% !important;
 }
-#menu #menu-content .card-title h4 {
+#menu .card-title h4 {
   font-family: manrope-bold !important;
 }
 #menu .menuBtn, #menu .menuBtn2 {
@@ -90,10 +129,7 @@ body {
 #menu #menu-content {
   background: transparent !important;
 }
-#menu #menu-content .card-action .row .col {
-  margin-bottom: 3%;
-}
-#menu #menu-content .menuBtn.active {
+#menu .menuBtn.active {
   background-color: #F65130 !important;
 }
 #menu #menu-content .card-content {
@@ -106,30 +142,30 @@ body {
   margin-bottom: 0;
   background-color: #031B32 !important;
 }
-#b-title-wrap .card-title {
+#b-title-wrap {
   font-family: manrope-bold !important;
   padding-top: 3%;
   padding-left: 5%;
   padding-bottom: 1.5%;
 }
-#b-title-wrap .card-title #icon {
-  width: 8.5vh;
+#b-title-wrap #icon {
+  width: 7.5vh;
   height: auto;
   float: right;
   padding-right: 5%;
 }
-#b-title-wrap .card-title h4 {
+#b-title-wrap  h4 {
   color: #fff !important;
   text-align: left;
   font-weight: 800;
   margin: 0 !important;
   padding: 0 !important;
 }
-#b-title-wrap .card-title h4 span {
+#b-title-wrap h4 span {
   color: #F65130 !important;
   font-weight: 800;
 }
-#b-title-wrap .card-title h4 #demo {
+#b-title-wrap  h4 #demo {
   color: #fff !important;
   font-size: 1.2rem;
   font-weight: 800;
@@ -181,27 +217,20 @@ body {
 #intro #genBtn-wrap .col {
   height: 40px;
 }
-#intro .card-action {
-  border-top: 2px solid black;
-}
-#intro #blocktime {
-  font-weight: 800 !important;
-}
-#intro #yourbalance {
-  font-weight: 800 !important;
-}
-.card-action {
+
+#menu .menu-footer {
+  border-top: 2px solid #455969 !important;
   border-top-color: #455969 !important;
   margin: 0 !important;
   padding: 0 !important;
   height: 30px;
 }
-.card-action #yourbalance, .card-action #blocktime {
+.menu-footer #yourbalance, .menu-footer #blocktime {
   padding-top: 5%;
   font-size: 1.0rem;
   letter-spacing: 0.02em;
 }
-.card-action .baldiv {
+.menu-footer .baldiv {
   font-family: manrope-bold !important;
   font-size: 1.2rem !important;
   padding-left: 10%;
@@ -210,7 +239,7 @@ body {
   text-align: left !important;
   font-variant-numeric: oldstyle-nums;
 }
-.card-action .timediv {
+.menu-footer .timediv {
   font-family: manrope-bold !important;
   font-size: 1.2rem !important;
   padding-right: 10%;
@@ -275,12 +304,15 @@ body {
 
   position: sticky;
   width: 120px;
-  border-left: 4.5px solid #F0F0FA;
   background-color: #91919D;
   color: #fff !important;
 }
 #mycash #futuretable thead tr #th-amnt {
   border-left: none !important;
+  border-right: 8px solid #F0F0FA;
+}
+#mycash #futuretable thead tr #th-time {
+  border-right: 8px solid #F0F0FA;
 }
 .collect {
   font-family: manrope-bold !important;
@@ -289,7 +321,7 @@ body {
 #mycash #futuretable tbody tr td .wrap {
   text-align: right; 
   display: inline-block;
-  min-width: 75px;
+  min-width: 67px;
 }
 #mycash #futuretable tbody tr .futurecash {
   text-align: center;
@@ -361,3 +393,4 @@ body {
 .timepicker-digital-display {
   background-color: #031B32 !important;
 }
+

@@ -220,7 +220,7 @@
 						// calculate progress
 						let percent = (Minima.block/diff * 100);
 						
-						collectstring = '<div class="progress">'+
+						collectstring = '<div onclick="showBlock('+timecoin+')" class="progress">'+
 											'<div class="determinate" style="width: '+percent+'">'+
 										'</div>';
 					}
@@ -232,16 +232,16 @@
 						day: 'numeric',
 						hour: 'numeric',
 						minute: 'numeric',
-						second: 'numeric'
 					  });
 					date = dateTimeFormat.format(date);
+					date = moment(date).format("MMM DD, YY - HH:mm")
 					
 					if(coinproof.coin.address == timeaddress){
 						cashtable +=
 									'<tr>'+
 										'<td class="futurecash"><div class="wrap">'+coinproof.coin.amount+'</div></td>'+
 										'<td class="futurecash"><div class="wrap">'+date+'</div></td>'+
-										'<td class="futurecash" id="futurecashbtn" onclick="showBlock('+timecoin+')"><div class="wrap">'+collectstring+'</div></td>'+
+										'<td class="futurecash" id="futurecashbtn"><div class="wrap">'+collectstring+'</div></td>'+
 									'</tr>';
 					}
 				}
@@ -343,21 +343,25 @@
 		
 	</script>
 	
+
 	<div id="menu" class="container center-align">
-		<div id="b-title-wrap" class="z-depth-0 card">
-			<div class="card-title z-depth-0">
+		<div class="menu-header">
+
+			<div id="b-title-wrap" class="z-depth-0">
 				<h4> Future<span>Cash ></span> <span id="demo">Demo</span>
 					<img id="icon" src="assets/MINIMA_ORANGE.svg">
 				</h4>
 			</div>
-		</div>
 
-		<div id="menu-content" class="z-depth-0 card">
-			<div class="card-title z-depth-0">
+			<div id="buttons">
 				<div onclick="showPage(0)" id="introBtn" class="btn-flat menuBtn active">Intro</div>
 				<div onclick="showPage(1)" id="sendCashBtn" class="btn-flat menuBtn">Send Cash</div>
 				<div onclick="showPage(2)" id="myFutureBtn" class="btn-flat menuBtn">My Future</div>
 			</div>
+		
+		</div>
+		
+		<div id="menu-content" class="z-depth-0 card">
 			<div class="card-content">
 				<!-- Intro -->
 				<div id="intro">
@@ -423,14 +427,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="card-action">
-				<div class="row">
-					<div style="padding: 0;" class="col s6">
-						<div class="baldiv" id="yourbalance">...</div>
-					</div>
-					<div style="padding: 0;" class="col s6">
-						<div class="timediv" id="blocktime">...</div>
-					</div>
+		</div>
+
+		<div class="menu-footer">
+			<div class="row">
+				<div style="padding: 0;" class="col s6">
+					<div class="baldiv" id="yourbalance">...</div>
+				</div>
+				<div style="padding: 0;" class="col s6">
+					<div class="timediv" id="blocktime">...</div>
 				</div>
 			</div>
 		</div>
@@ -452,6 +457,7 @@
 
 	<!-- Compiled and minified JavaScript -->
 	<script src="js/materialize.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 </body>
     
 </html>
