@@ -23,6 +23,7 @@
 
 		// init date picker
 		document.addEventListener('DOMContentLoaded', function() {
+			
 			// instantiate date-picker
 			var elems = document.querySelectorAll('.datepicker');
 			let options = {
@@ -56,7 +57,7 @@
 		
 		function newKey(){
 			Minima.cmd("keys new", function(json){
-				document.getElementById("myaddress").innerHTML = ""+json.response.key.publickey;
+				document.getElementById("futurekey").value = ""+json.response.key.publickey;
 			});
 		}
 		
@@ -212,7 +213,7 @@
 					
 					var collectstring = "";
 					if(timecoin <= Minima.block){
-						collectstring="<button data-target='modalSendFunds' id=\""+coinproof.coin.coinid+"\" onclick='collectCoin(\""+coinproof.coin.coinid+"\",\""+keycoin+"\",\""+amountcoin+"\");' class='collect btn-flat btn-small waves-effect waves-light modal-trigger'>COLLECT</button>";
+						collectstring="<button id=\""+coinproof.coin.coinid+"\" onclick='collectCoin(\""+coinproof.coin.coinid+"\",\""+keycoin+"\",\""+amountcoin+"\");' class='collect btn-flat btn-small waves-effect waves-light'>COLLECT</button>";
 					}else{
 						var diff = timecoin - Minima.block;
 						collectstring = "Ready in "+diff+"..";
@@ -287,17 +288,6 @@
 
 						M.toast({html: "Collected "+cashamount+" FutureCash!", classes:"success"});
 						
-						var elems = document.querySelectorAll('.modal');
-						let options = {
-							opacity: 0.7,
-							dismissible: true,
-							onOpenStart: function() {
-								$('#modalSendFunds h4').text("Funds Collected!");
-								$('#modalSendFunds p').text("Check your balance!");
-								$('#yesBtn').addClass("hide");
-							},
-						};
-						var instances = M.Modal.init(elems, options);	
 					}
 			    });	
 			});
@@ -346,7 +336,6 @@
 
 	<div id="menu" class="container center-align">
 		<div class="menu-header">
-
 			<div id="b-title-wrap" class="z-depth-0">
 				<h4> Future<span>Cash ></span> <span id="demo">Demo</span>
 					<img id="icon" src="assets/MINIMA_ORANGE.svg">
@@ -354,11 +343,10 @@
 			</div>
 
 			<div id="buttons">
-				<div onclick="showPage(0)" id="introBtn" class="btn-flat menuBtn active">Intro</div>
+				<div onclick="showPage(0)" id="introBtn" class="btn-flat menuBtn active">About</div>
 				<div onclick="showPage(1)" id="sendCashBtn" class="btn-flat menuBtn">Send Cash</div>
 				<div onclick="showPage(2)" id="myFutureBtn" class="btn-flat menuBtn">My Future</div>
 			</div>
-		
 		</div>
 		
 		<div id="menu-content" class="z-depth-0 card">
@@ -367,19 +355,6 @@
 				<div id="intro">
 					<h5>Safeguard your money with FutureCash.</h5>
 					<p style="padding-right: 3.5%;">Look after your money by not spending it <span style="font-family: manrope-bold;">NOW!</span><br>  So do your future-self a favour - generate a key and send yourself some FutureCash.<br> You can look after money for others, too!  Get them to send you their generated FutureCash key, then use that key to safeguard their future.</p>
-
-					<div id="myaddress-wrap">
-						<p id="myaddress">no key generated yet!</p>
-					</div>
-
-					<div id="genBtn-wrap" class="row">
-						<div style="padding: 0;" class="col s6 m7 l6">
-							<div onclick="newKey();" class="btn-flat genBtn">Generate key</div>
-						</div>
-						<div class="valign-wrapper col s12 m5 pull-m3 l6 pull-l3">
-							<p><span style="font-family: manrope-bold;">Only use the key once!</span></p>
-						</div>
-					</div>
 				</div>
 				<!-- Send Cash -->
 				<div id="sendcash" class="hide">
@@ -414,9 +389,18 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col s3"></div>
-						<div class="col s9">
+						<div class="col push-m3 m6 push-s3 s9">
 							<div onclick="sendFunds()" data-target="modalSendFunds" class="btn-flat sendBtn modal-trigger left">Send Funds</div>
+						</div>
+						<div class="col push-m1 m5 hide-on-small-and-down">
+							<div onclick="newKey();" class="btn-flat genBtn2">Generate key</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s3"></div>
+
+						<div style="margin: 0 !important" class="col pull-s1 s9 hide-on-med-and-up">
+							<div onclick="newKey();" class="btn-flat genBtn">Generate key</div>
 						</div>
 					</div>
 				</div>
