@@ -9,8 +9,12 @@
 	<!--   The MINIMA MiFi Javascript Library -->
 	<script type="text/javascript" src="minima.js"></script>
 	<script type="text/javascript" src="decimal.js"></script>
+	<!-- Materialize Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="css/materialize.css">
+	<link rel="stylesheet" href="css/materialize.css">
+	<!-- Icons -->
+	
 	<!--  STYLE -->
 	<link rel="stylesheet" type="text/css" href="future.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -21,9 +25,13 @@
 
 	<script type="text/javascript">
 
+		$(document).ready(function(){
+
+			$('.collapsible').collapsible();
+		});
 		// init date picker
 		document.addEventListener('DOMContentLoaded', function() {
-			
+
 			// instantiate date-picker
 			var elems = document.querySelectorAll('.datepicker');
 			let options = {
@@ -39,8 +47,42 @@
 
 		//Global Variables - used Script IDE..
 		var timescript  = "LET owner = PREVSTATE ( 0 ) LET time = PREVSTATE ( 1 ) RETURN SIGNEDBY ( owner ) AND @BLKNUM GTE time";
-		 var timeaddress = "";
+		var timeaddress = "";
 		 
+		function copyKey() {
+
+			const key = document.getElementById("myaddress").innerHTML;
+
+			if (key.length > 0 && key !== "No key generated yet.") {
+				const el = document.createElement('textarea');
+				el.value = key;
+				document.body.appendChild(el);
+				el.select();
+				document.execCommand('copy');
+				document.body.removeChild(el);
+	
+				M.toast({html: "Copied key to clipboard.", classes: "success"});
+				return;
+			} else {
+				M.toast({html: "No key to copy!", classes: "danger"});
+			}
+
+
+		}
+
+		async function pastekey() {
+
+			const text = await navigator.clipboard.readText();
+			if (text.substring(0, 2) == '0x') {
+				document.getElementById("futurekey").value = text;
+				M.toast({html: "Pasted key!", classes: "success"});
+			} else {
+				M.toast({html:"Don't recognize key!", classes:"danger"});
+			}
+
+
+
+		}
 		function showBlock(block) {
 			M.toast({html: "Ready at block - "+block, classes:"ready"});
 		}
@@ -57,7 +99,7 @@
 		
 		function newKey(){
 			Minima.cmd("keys new", function(json){
-				document.getElementById("futurekey").value = ""+json.response.key.publickey;
+				document.getElementById("myaddress").innerHTML = ""+json.response.key.publickey;
 			});
 		}
 		
@@ -188,17 +230,15 @@
 		function cashFunction(){
 			Minima.cmd("coins relevant address:"+timeaddress , function(json){
 
-				let cashtable =
-							'<table id="futuretable" class="centered">'+
-								'<thead>'+
-									'<tr>'+
-										'<th id="th-amnt">Amount</th>'+
-										'<th id="th-time">Time</th>'+
-										'<th id="th-collect">Collect</th>'+
-									'</tr>'+
-								'</thead>'+
-								'<tbody>';
-				
+				let cashtable =	'<div id="futuretable">'+
+									'<div id="table-header" class="row">'+
+										'<div id="th-amount" class="col s4"><div class="btn-small z-depth-0 waves-block">Amount </div></div>'+
+										'<div id="th-time" class="col s4"><div class="btn-small z-depth-0 waves-block"> Time </div></div>'+
+										'<div id="th-collect" class="col s4"><div class="btn-small z-depth-0 waves-block"> Collect </div></div>'+
+									'</div>'+
+									'<div id="futuredata">';
+								
+										
 				//get any of these coins that have the time address
 				var coinlen = json.response.coins.length;
 				for(i=0;i<coinlen;i++){
@@ -213,7 +253,7 @@
 					
 					var collectstring = "";
 					if(timecoin <= Minima.block){
-						collectstring="<button id=\""+coinproof.coin.coinid+"\" onclick='collectCoin(\""+coinproof.coin.coinid+"\",\""+keycoin+"\",\""+amountcoin+"\");' class='collect btn-flat btn-small waves-effect waves-light'>COLLECT</button>";
+						collectstring = '<button id="'+coinproof.coin.coinid+'" onclick="collectCoin(\''+coinproof.coin.coinid+'\',\''+keycoin+'\',\''+amountcoin+'\');" class="collect z-depth-0 btn-small waves-block">Collect</button>';
 					}else{
 						var diff = timecoin - Minima.block;
 						collectstring = "Ready in "+diff+"..";
@@ -221,8 +261,8 @@
 						// calculate progress
 						let percent = (Minima.block/diff * 100);
 						
-						collectstring = '<div onclick="showBlock('+timecoin+')" class="progress">'+
-											'<div class="determinate" style="width: '+percent+'">'+
+						collectstring = '<div onclick="showBlock(\''+timecoin+'\')" class="progress">'+
+											'<div class="determinate" style="width: '+percent+'"></div>'+
 										'</div>';
 					}
 
@@ -238,23 +278,23 @@
 					date = moment(date).format("MMM DD, YY - HH:mm")
 					
 					if(coinproof.coin.address == timeaddress){
-						cashtable +=
-									'<tr>'+
-										'<td class="futurecash"><div class="wrap">'+coinproof.coin.amount+'</div></td>'+
-										'<td class="futurecash"><div class="wrap">'+date+'</div></td>'+
-										'<td class="futurecash" id="futurecashbtn"><div class="wrap">'+collectstring+'</div></td>'+
-									'</tr>';
+						cashtable+= '<div class="row">'+
+										'<div id="td-amount" class="col s4 futurecash"><div class="wrap">'+coinproof.coin.amount+'</div></div>'+
+										'<div id="td-time" class="col s4 futurecash">'+date+'</div>'+
+										'<div id="td-collect" class="col s4 futurecash" id="futurecashbtn">'+collectstring+'</div>'+
+									'</div>';
 					}
 				}
 				
 				if(coinlen == 0){
-					cashtable += 
-								'<tr>'+
-									'<td colspan="3" style="text-align: center;"> <br>No money yet! </td>'+
-								'</tr>';
+					
+					cashtable+= '<div class="row">'+
+									'<div class="col s12"> No money yet!</div>'+
+								'</div>';
+								
 				}
 				
-				cashtable += "</tbody></table>";
+				cashtable+= '</div></div>';
 
 				//And set it..
 				document.getElementById("futuremoney").innerHTML = cashtable;
@@ -295,12 +335,32 @@
 		
 		//Wait for the page to load..
 		window.addEventListener("load", function(){
-			
+			let preferences = {}
+			preferences = {isUsersFirst: false};
 			//Initialise MiFi
 			Minima.init(function(msg){
 				//Deal with each message type
 		 		if(msg.event == "connected"){
-			 		setTime();
+					// preference 
+					Minima.file.load("preference.txt", function(res){
+						if (res.success) {
+							let preferences = JSON.parse(res.data);
+							// check if user's first time... 
+							if (preferences.isUsersFirst) {
+
+								showPage(1);
+							} 
+
+						} else {
+							preferences.isUsersFirst = true;
+							let json = JSON.stringify(preferences);
+							Minima.file.save(json, "preference.txt", function(res){
+								if (res.success){};
+							});
+						}
+					});
+
+					setTime();
 			 		setBalance();
 			 		
 			 		// Tell Minima about the timescript! Now you can spend it when required 
@@ -313,7 +373,6 @@
 				 		//Run it once..
 				 		cashFunction();
 			 		});
-			 				
 			 	}else if(msg.event == "newblock"){
 		 			setTime();
 		 			cashFunction();
@@ -336,71 +395,139 @@
 
 	<div id="menu" class="container center-align">
 		<div class="menu-header">
-			<div id="b-title-wrap" class="z-depth-0">
-				<h4> Future<span>Cash ></span> <span id="demo">Demo</span>
+			<div id="b-title-wrap" class="z-depth-0 row">
+
+				<div class="col s10">
+					<h4> Future<span>Cash ></span> <span id="demo">Demo</span>
+				</div>
+				<div class="col s2">
 					<img id="icon" src="assets/MINIMA_ORANGE.svg">
+				</div>
+				
 				</h4>
 			</div>
 
-			<div id="buttons">
-				<div onclick="showPage(0)" id="introBtn" class="btn-flat menuBtn active">About</div>
-				<div onclick="showPage(1)" id="sendCashBtn" class="btn-flat menuBtn">Send Cash</div>
-				<div onclick="showPage(2)" id="myFutureBtn" class="btn-flat menuBtn">My Future</div>
+
+			<div id="buttons" class="row">
+				<div id="aboutwrapper" class="col s4">
+					<div onclick="showPage(0)" id="introBtn" class="btn-flat waves-block menuBtn active">About</div>
+				</div>
+				<div id="sendcashwrapper" class="col s4">
+					<div onclick="showPage(1)" id="sendCashBtn" class="btn-flat waves-block menuBtn">Send</div>
+				</div>
+				<div id="myfuturewrapper" class="col s4">
+					<div onclick="showPage(2)" id="myFutureBtn" class="btn-flat waves-block menuBtn">My Future</div>
+				</div>
 			</div>
 		</div>
 		
 		<div id="menu-content" class="z-depth-0 card">
 			<div class="card-content">
 				<!-- Intro -->
-				<div id="intro">
-					<h5>Safeguard your money with FutureCash.</h5>
-					<p style="padding-right: 3.5%;">Look after your money by not spending it <span style="font-family: manrope-bold;">NOW!</span><br>  So do your future-self a favour - generate a key and send yourself some FutureCash.<br> You can look after money for others, too!  Get them to send you their generated FutureCash key, then use that key to safeguard their future.</p>
+				<div id="intro" style="overflow-y: scroll">
+					<div id="title" class="row">
+						<div class="s12">
+							<h2> Safeguard money with FutureCash </h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12">
+							<ul class="firstcollection collection z-depth-0">
+								<li class="collection-item"><p><i class="material-icons">keyboard_arrow_right</i> Look after your cash by not spending it <span style="font-family:manrope-bold">NOW!</span></p></li>
+								<li class="collection-item"><p><i class="material-icons">keyboard_arrow_right</i> Look after other people's cash, too!</p></li>
+							</ul>
+						</div>
+						<div class="col s12">
+							<ul class="secondcollection collapsible collection z-depth-0">
+								<li>
+									<div class="collapsible-header"><h5><i class="material-icons info-icons">lock</i>Safeguarding your cash</h5><i id="dropdown1" class="dropdown material-icons iconadd">arrow_drop_down</i><i class="dropdown material-icons iconremove">arrow_drop_up</i></div>
+									<div class="collapsible-body">
+										<p>1. Navigate to the <span style="font-family:manrope-bold">Send</span> page</p>
+										<p>2. Generate a key you will use to lock away your cash</p>
+										<p>3. Copy the key</p>
+										<p>4. Paste the key into the key field </p>
+										<p>5. Pick a date and time - that's when you would like your cash to become spendable</p>
+										<p>6. Choose how much you would like to lock away</p>
+										<p>7. Send yourself some <span style="font-family:manrope-bold">FutureCash</span></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="col s12">
+							<ul  class="thirdcollection collapsible collection z-depth-0">
+								<li>
+									<div class="collapsible-header"><h5><i class="material-icons info-icons">lock</i>Safeguarding other people's cash</h5><i id="dropdown2" class="dropdown material-icons iconadd">arrow_drop_down</i><i class="dropdown material-icons iconremove">arrow_drop_up</i></div>
+									<div class="collapsible-body">
+										<p>1. Generate a key you will use to lock away your cash</p>
+										<p>2. Copy the key</p>
+										<p>3. Send the key to the person whose cash you want to safeguard</p>
+										<p>4. Ask them to follow steps 3 - 6 from <span onclick="openCollapsible()" style="font-family: manrope-bold">above</span> </p>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="col s12">
+							<ul  class="fourthcollection collapsible collection z-depth-0">
+								<li>
+									<div  class="collapsible-header"><h5><i class="material-icons info-icons">lock_open</i>Collecting FutureCash</h5> <i class="dropdown material-icons iconadd">arrow_drop_down</i><i class="dropdown material-icons iconremove">arrow_drop_up</i></div>
+									<div class="collapsible-body">
+										<p>1. Navigate to the <span style="font-family: manrope-bold;">My Future</span> page</p>
+										<p>2. Once the date and time of the <span style="font-family:manrope-bold">FutureCash</span> arrives, a <span style="font-family: manrope-bold;">Collect</span> button appears, which allow key holders to collect the <span style="font-family:manrope-bold">FutureCash</span></p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 				<!-- Send Cash -->
 				<div id="sendcash" class="hide">
-					<div class="row">
+					<div id="myaddress-wrap" class="row">
+						<div class="col s12">
+							<p id="myaddress">No key generated yet.</p>
+						</div>
+						<div class="col s6">
+							<div onclick="newKey();" class="btn-flat btn-small z-depth-0 genBtn">Generate key</div>
+						</div>
+						<div class="col s6">
+							<div onclick="copyKey();" class="btn-flat btn-small z-depth-0 copykey">Copy key</div>
+						</div>
+					</div>
+					<div id="sendform">
+						<div class="row">
+							<div class="col s3">
+								<h6 id="title-dt" style="margin-top: 0">Date & Time:</h6>
+							</div>
+							<div class="col s4">
+								<input size="40" class="datepicker" id="futuredate">
+							</div>
+							<div class="col s5">
+								<input size="40" type="text" class="timepicker" id="futuretime">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s3">
+								<h6>Amount:</h6>
+							</div>
+							<div class="col s9">
+								<input size="40" type="number" id="amount">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s3">
+								<h6>Key:</h6>
+							</div>
+							<div class="col s9">
+								<input size="40" type="text" id="futurekey">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col offset-s3 s5">
+								<div onclick="pastekey();" class="btn-flat btn-small z-depth-0 pastekey">Paste key</div>
+							</div>
+							<div class="col s4">
+								<div onclick="sendFunds()" data-target="modalSendFunds" class="btn-small z-depth-0 sendBtn modal-trigger left">Send Funds</div>
+							</div>
 
-					</div>
-					<div class="row">
-						<div class="col s3">
-							<h6 style="margin-top: 0">Date & Time:</h6>
-						</div>
-						<div class="col s4">
-							<input size="40" class="datepicker" id="futuredate">
-						</div>
-						<div class="col s5">
-							<input size="40" type="text" class="timepicker" id="futuretime">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s3">
-							<h6>Amount:</h6>
-						</div>
-						<div class="col s9">
-							<input size="40" type="number" id="amount">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s3">
-							<h6>Key:</h6>
-						</div>
-						<div class="col s9">
-							<input size="40" type="text" id="futurekey">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col push-m3 m6 push-s3 s9">
-							<div onclick="sendFunds()" data-target="modalSendFunds" class="btn-flat sendBtn modal-trigger left">Send Funds</div>
-						</div>
-						<div class="col push-m1 m5 hide-on-small-and-down">
-							<div onclick="newKey();" class="btn-flat genBtn2">Generate key</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col s3"></div>
-
-						<div style="margin: 0 !important" class="col pull-s1 s9 hide-on-med-and-up">
-							<div onclick="newKey();" class="btn-flat genBtn">Generate key</div>
 						</div>
 					</div>
 				</div>
