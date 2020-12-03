@@ -222,7 +222,7 @@ body {
 }
 #intro {
   text-align: left;
-  padding: 0 5% 0 5%;
+  padding: 1% 5% 0 5%;
 }
 #intro #title {
   margin-bottom: 0;
@@ -237,22 +237,17 @@ body {
 .info-icons {
   color: #F65130!important;
 }
-.firstcollection {
-  border: none;
-}
-.firstcollection .collection-item {
-  line-height: 35px;
-  text-align: left;
-  border: none;
-  background-color: transparent;
-  padding-left: 2%;
+.firstcollection li div.collapsible-header h5 {
+  line-height: 31px;
+  margin-left: 1%;
+  float: left;
 }
 .secondcollection li div.collapsible-header h5 {
   line-height: 31px;
   margin-left: 1%;
   float: left;
 }
-.secondcollection li div.collapsible-body p, .thirdcollection li div.collapsible-body p, .fourthcollection li div.collapsible-body p  {
+.firstcollection li div.collapsible-body p, .secondcollection li div.collapsible-body p, .thirdcollection li div.collapsible-body p, .fourthcollection li div.collapsible-body p  {
   padding: 1%;
 }
 .thirdcollection li div.collapsible-header h5 {
@@ -327,7 +322,7 @@ ul.collapsible {
   padding-right: 1.3%;
 }
 #sendcash #myaddress {
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   padding: 2%;
   margin-bottom: 2%;
   word-wrap: break-word;
