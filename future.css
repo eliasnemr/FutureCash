@@ -15,27 +15,34 @@
   background-color: #F0F0FA;
   width: 70%;
   max-width: 700px;
+  min-height: 70%;
 }
 #menu #b-title-wrap {
   margin-bottom: 1%;
 }
 #menu #menu-content {
   width: 100%;
-  height: 55vh;
+  height: calc(70% - 120px - 60px);
   overflow: scroll;
 }
 #menu .menu-header {
   position: relative;
   top: 0;
+  height: 120px;
 }
 #menu .menu-footer {
   position: relative;
   bottom: 0;
+  border-top: 2px solid #455969 !important;
+  border-top-color: #455969 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: 60px;
+  width:100%;
 }
 #menu #yourbalance {
   margin-bottom: 4%;
 }
-
 
 @media only screen and (max-width: 514px) {
   #futuredata .row .col {
@@ -47,8 +54,15 @@
     height: 100%;
     width: 100%;
   }
+  #menu .menu-header {
+    height: 110px;
+  }
+  #menu .menu-footer {
+    height: 60px;
+    max-height: 100px;
+  }
   #menu #menu-content {
-    height: 70vh;
+    height: calc(100% - 110px - 100px);
   }
 }
 
@@ -60,6 +74,9 @@
     font-size: 1.0rem !important;
   }
   #futuredata .row .col {
+    font-size: 0.9rem !important;
+  }
+  #mycash #futuretable #table-header.row .col .btn-flat {
     font-size: 0.9rem !important;
   }
 }
@@ -92,12 +109,18 @@
   #futuredata .row .col {
     font-size: 0.8rem !important;
   }
+  #mycash #futuretable #table-header.row .col .btn-flat {
+    font-size: 0.8rem !important;
+  }
 }
 @media only screen and (max-width: 344px) {
   #mycash #futuretable #table-header , #menu #buttons .menuBtn, .collect {
     font-size: 0.7rem !important;
   }
   #sendcash .genBtn, #sendcash .genBtn2, #sendcash .sendBtn, #sendcash .pastekey, #sendcash .copykey {
+    font-size: 0.7rem !important;
+  }
+  #mycash #futuretable #table-header.row .col .btn-flat {
     font-size: 0.7rem !important;
   }
 }
@@ -108,9 +131,10 @@
   #sendcash .genBtn, #sendcash .genBtn2, #sendcash .sendBtn, #sendcash .pastekey, #sendcash .copykey {
     font-size: 0.6rem !important;
   }
+  #mycash #futuretable #table-header.row .col .btn-flat {
+    font-size: 0.6rem !important;
+  }
 }
-
-
 
 ::-webkit-scrollbar {
   width: 0px;
@@ -130,19 +154,22 @@ body {
 }
 
 #buttons {
-  padding-left: 3.5%;
-  padding-right: 3.5%;
+  text-align: center;
+  margin-left: 3.5%;
+  margin-right: 3.5%;
   margin-bottom: 0 !important;
 }
-#aboutwrapper {
-  padding-right: 0 !important;
+#aboutwrapper, #th-amount {
+  padding-right:0!important;
+  padding-left:0!important;
 }
-#sendcashwrapper {
-  padding-right: 0 !important;
+#sendcashwrapper, #th-time {
+  padding-right:0!important;
 }
-#myfuturewrapper {
-  padding-right: 1.5% !important;
+#myfuturewrapper, #th-collect {
+  padding-right:0!important;
 }
+
 #menu #buttons .col .menuBtn {
   margin-top: 2%;
   white-space: pre-wrap;
@@ -172,8 +199,8 @@ body {
 }
 #b-title-wrap {
   margin-top: 5%;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 3.5%;
+  margin-right: 3.5%;
   margin-bottom: 0;
   background-color: #031B32 !important;
 }
@@ -188,7 +215,7 @@ body {
 }
 #b-title-wrap #icon {
   width: 75px;
-  height: 4vh;
+  height: 30px;
   float: right;
   right: 7%;
 }
@@ -222,7 +249,7 @@ body {
 }
 #intro {
   text-align: left;
-  padding: 1% 5% 0 5%;
+  padding: 1% 3.5% 0 3.5%;
 }
 #intro #title {
   margin-bottom: 0;
@@ -241,22 +268,27 @@ body {
   line-height: 31px;
   margin-left: 1%;
   float: left;
+  font-size: 1.1rem!important;
 }
 .secondcollection li div.collapsible-header h5 {
   line-height: 31px;
   margin-left: 1%;
   float: left;
+  font-size: 1.1rem!important;
 }
 .firstcollection li div.collapsible-body p, .secondcollection li div.collapsible-body p, .thirdcollection li div.collapsible-body p, .fourthcollection li div.collapsible-body p  {
   padding: 1%;
+  font-family: manrope-regular;
 }
 .thirdcollection li div.collapsible-header h5 {
   line-height: 31px;
   margin-left: 1%;
+  font-size: 1.1rem!important;
 }
 .fourthcollection li div.collapsible-header h5 {
   line-height: 31px;
   margin-left: 1%;
+  font-size: 1.1rem!important;
 }
 .dropdown {
   float: right;
@@ -295,7 +327,7 @@ li.active .collapsible-header .material-icons.iconremove {
   font-size: 1.3rem;
 }
 #intro p {
-  font-size: 1.3rem;
+  font-size: 1.0rem;
   font-weight: 300;
   text-align: left;
 }
@@ -314,12 +346,8 @@ ul.collapsible {
   padding-bottom: 2%;
   border-bottom: 2px solid #455968;
 }
-#sendcash #myaddress-wrap .col {
-  padding-right:1%;
-}
 #sendcash .col {
   margin-right: 0;
-  padding-right: 1.3%;
 }
 #sendcash #myaddress {
   font-size: 1.0rem;
@@ -351,11 +379,21 @@ ul.collapsible {
   color: #317AFF;
   font-family: manrope-bold;
 }
+#sendcash #copykey.col.s4 {
+  width: 40.33333%!important;
+  margin-left: 1%!important;
+}
 #sendcash .copykey:hover, #sendcash .pastekey:hover {
   background-color: transparent !important;
 }
+#copyWrapper.offset-s1 {
+  margin-left: 1%;
+}
+#sendcash .copyKey {
+  width: 122%;
+}
+
 #sendcash .pastekey {
-  margin-left: 2%;
   width: 100%;
   text-transform: none;
   border: 1px solid #317AFF !important;
@@ -375,13 +413,6 @@ ul.collapsible {
   height: 40px;
 }
 
-#menu .menu-footer {
-  border-top: 2px solid #455969 !important;
-  border-top-color: #455969 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 30px;
-}
 .menu-footer #yourbalance, .menu-footer #blocktime {
   padding-top: 5%;
   font-size: 1.0rem;
@@ -405,13 +436,15 @@ ul.collapsible {
   font-variant-numeric: oldstyle-nums;
 }
 #sendcash {
-  padding: 0% 4% 0 5%;
+  padding: 0% 3.5% 0 3.5%;
 }
 #sendcash #sendform {
   padding: 0 0 0 15%;
 }
 #sendcash .col {
+  padding-right: 0 !important;
   padding-left: 0 !important;
+
 }
 #sendcash h6 {
   font-family: manrope-bold;
@@ -441,16 +474,8 @@ ul.collapsible {
   background: inherit !important;
   border: none !important;
 }
-#sendcash #amount {
-  padding-right: 1%;
-}
-#sendcash #futurekey {
-  padding-right: 1%;
-}
 #sendcash input { 
-  padding-right: 2%;
   padding-left: 2%;
-  margin-left: 1%;
   background-color: #fff !important;
   height: 36px;
   word-break: break-all;
@@ -475,18 +500,21 @@ ul.collapsible {
   overflow: hidden;
 }
 #mycash {
-  padding-left: 3.5%;
-  padding-right: 3.3%;
+  margin-left: 3.5%;
+  margin-right: 3.5%;
   padding-bottom: 5%;
 }
 #mycash #futuretable {
   margin-top: 1%;
 }
-#mycash #futuretable #table-header .col {
+#mycash #futuretable #table-header.row .col .btn-flat {
   font-size: 1.0rem;
   text-align: center;
   font-family: manrope-bold !important;
   color: #fff !important;  
+  padding-left:0;
+  padding-right:0!important;
+  cursor: auto;
 }
 
 #mycash #futuretable #table-header .col div {
@@ -495,59 +523,48 @@ ul.collapsible {
   font-family: manrope-bold;
   text-transform: none;
 }
-#th-amount {
-  padding-right: 0;
-}
-#th-time {
-  padding-right: 0;
-}
-#futuredata .row {
-  padding-left: 1.5%;
-  padding-right: 1.5%;
-}
+
 #futuredata .row .col {
   background-color: #FFFFFF;
   font-family: manrope-regular;
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   font-variant-numeric: tabular-nums;
-  font-size: 1.2rem;
-  height: 30px;
 
+  max-height: 25px;
   white-space: nowrap;
-  overflow: hidden;
-
-  flex-direction: column;
-  display:flex;
-  align-items: center !important;
-}
-#td-collect {
-  padding-right: 0;
-  height: auto;
+  text-overflow: ellipsis;
 }
 #td-amount, #td-time {
+  margin: auto;
+  text-align: center;
   border-right: 1px solid #F0F0FA;
+  height: 29px;
+  line-height: 25px;
+}
+#td-collect {
+  height: 25px;
 }
 #td-amount .wrap {
+  margin: auto;
+  display: inline;
   text-align: right;
   width: 100%;
 }
-
 .collect {
-  margin-left: 2%;
+  margin: auto;
   font-family: manrope-bold !important;
-  max-height: auto;
   text-transform: none !important;
-  width: 100%;
-  height: 29px;
-  line-height: 0;
+  height: inherit!important;
+  line-height: inherit;
 }
 .progress {
   cursor: pointer;
-  margin-top: 6%;
-  width: 80%;
+  height: 10px;
+  width: 100%;
 }
 
 #futurecashbtn {
+  margin: auto;
   cursor: pointer;
 }
 #mycash .collect {
